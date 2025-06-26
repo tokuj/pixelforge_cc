@@ -9,6 +9,24 @@
 - **プロジェクトID**: coproto-gcp
 - **リージョン**: asia-northeast1
 
+## スタイリング方針
+
+### MUI（Material-UI）を採用
+本プロジェクトでは、スタイリングにMUIを使用します。Tailwind CSSは使用しません。
+
+#### 理由
+1. **統一されたデザインシステム**: Material Designに準拠
+2. **豊富なコンポーネント**: 必要なUIパーツが揃っている
+3. **テーマシステム**: 一貫したカスタマイズが可能
+4. **TypeScript対応**: 型安全な開発
+5. **バンドルサイズ最適化**: 単一のCSSフレームワーク
+
+#### スタイリング方法
+- **コンポーネント**: MUIの既製コンポーネントを使用
+- **カスタムスタイル**: `sx` prop、`styled` API、テーマカスタマイズ
+- **レイアウト**: MUIの`Box`、`Grid`、`Stack`コンポーネント
+- **レスポンシブ**: MUIのブレークポイントシステム
+
 ## 技術スタック
 - **フロントエンド**: Next.js 14+ (App Router)
 - **UIライブラリ**: Material-UI (MUI) v5
@@ -1186,10 +1204,26 @@ git checkout -b feature/phase-0-setup
 
 ### 1. Next.jsプロジェクトの作成
 ```bash
-# 現在のディレクトリにNext.jsプロジェクトを作成
-yarn create next-app . --typescript --app --tailwind --src-dir=false --import-alias "@/*"
+# 既存のpackage.jsonがある場合は一時退避
+if [ -f package.json ]; then
+  mv package.json package.json.backup
+fi
 
-# 既存のファイルがある場合は上書きの確認が出るので、適切に選択
+# 現在のディレクトリにNext.jsプロジェクトを作成（Tailwindなし）
+yarn create next-app . --typescript --app --no-tailwind --no-src-dir --import-alias "@/*"
+
+# 既存のファイルがある場合は以下の選択をする：
+# - README.md: No（既存のものを保持）
+# - .gitignore: Yes（Next.js用に更新）
+# - その他: Yes（新規作成を許可）
+
+# package.json.backupがある場合は、必要な内容を確認
+if [ -f package.json.backup ]; then
+  echo "既存のpackage.jsonの内容を確認:"
+  cat package.json.backup
+  # 必要に応じて手動でマージ
+  rm package.json.backup
+fi
 ```
 
 ### 2. 必要なパッケージのインストール
@@ -1201,9 +1235,10 @@ yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material
 yarn add react-dropzone
 
 # ユーティリティ
-yarn add lodash @types/lodash
+yarn add lodash
+yarn add -D @types/lodash
 
-# 開発用パッケージ
+# 型定義（必要に応じて）
 yarn add -D @types/node
 ```
 
@@ -1236,9 +1271,24 @@ echo "*.log" >> .gitignore
 
 ### 6. Phase 0完了時のコミットとPR
 ```bash
-# すべての変更をコミット
+# 変更内容を確認
+git status
+
+# .gitignoreに必要な項目を追加（もし不足があれば）
+echo "*.log" >> .gitignore
+echo ".DS_Store" >> .gitignore
+
+# すべての変更をステージング
 git add .
-git commit -m "feat: プロジェクトの初期セットアップ完了"
+
+# コミット
+git commit -m "feat: プロジェクトの初期セットアップ完了
+
+- Next.js 14 (App Router) プロジェクト作成
+- MUIとEmotionのインストール
+- 基本的なディレクトリ構造の構築
+- TypeScript設定
+- 開発環境の準備完了"
 
 # プッシュしてPRを作成
 git push -u origin feature/phase-0-setup
