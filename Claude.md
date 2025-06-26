@@ -845,19 +845,41 @@ conditions:
       duration: 300s
 ```
 
+## 開発フロー
+
+### ブランチ戦略
+- `main`: 本番環境用ブランチ
+- `develop`: 開発統合ブランチ
+- `feature/phase-X-[phase-name]`: 各Phase用のフィーチャーブランチ
+
+### プルリクエストルール
+1. 各Phaseごとに専用のブランチを作成
+2. Phase完了時にプルリクエストを作成
+3. PRタイトル: `[Phase X] Phase名`
+4. PR説明には完了したタスクのチェックリストを含める
+5. レビュー後にdevelopブランチにマージ
+
 ## 開発ロードマップ
 
 ### Phase 0: プロジェクトセットアップ
+**ブランチ名**: `feature/phase-0-setup`
+
+- [ ] developブランチの作成
+- [ ] feature/phase-0-setupブランチの作成とチェックアウト
 - [ ] Next.jsプロジェクトの作成（App Router、TypeScript、Tailwind CSS）
 - [ ] yarnでMUIと関連パッケージのインストール
 - [ ] プロジェクト構造の作成（ディレクトリ構成）
 - [ ] ESLintとPrettierの設定
 - [ ] images/ディレクトリのアセットを適切に配置
 - [ ] 基本的なレイアウトコンポーネントの作成
+- [ ] READMEの更新（プロジェクト概要、セットアップ手順）
+- [ ] PR作成: `[Phase 0] プロジェクトセットアップ`
 
 ### Phase 1: MVP（2週間）
+**ブランチ名**: `feature/phase-1-mvp`
 
 #### ブランディング実装
+- [ ] feature/phase-1-mvpブランチの作成とチェックアウト
 - [ ] ロゴコンポーネント（Logo.tsx）の作成
 - [ ] MUIテーマ設定（theme.ts）の作成
 - [ ] カラーパレット定数の定義
@@ -889,10 +911,13 @@ conditions:
 - [ ] PNG形式でのエクスポート機能
 - [ ] ファイル名の自動生成（pixelated_[元のファイル名]）
 - [ ] ダウンロード成功時のフィードバック
+- [ ] PR作成: `[Phase 1] MVP - 基本的な画像変換機能`
 
 ### Phase 2: 拡張機能（2週間）
+**ブランチ名**: `feature/phase-2-advanced-features`
 
 #### プリセット機能
+- [ ] feature/phase-2-advanced-featuresブランチの作成とチェックアウト
 - [ ] PresetSelectorコンポーネントの作成
 - [ ] PresetCardコンポーネントの実装
 - [ ] ゲーム機プリセットの定義（ファミコン、ゲームボーイ、スーファミ）
@@ -921,10 +946,13 @@ conditions:
 - [ ] スキャンライン効果の実装
 - [ ] CRTモニター風湾曲効果の実装
 - [ ] effects.tsにエフェクトロジックを集約
+- [ ] PR作成: `[Phase 2] 拡張機能 - プリセット、パレット、エフェクト`
 
 ### Phase 3: 共有機能（1週間）
+**ブランチ名**: `feature/phase-3-sharing`
 
 #### バックエンド実装
+- [ ] feature/phase-3-sharingブランチの作成とチェックアウト
 - [ ] Google Cloud Functionsプロジェクトの作成
 - [ ] requirements.txtの作成（Python依存関係）
 - [ ] main.pyの実装（HTTPエンドポイント）
@@ -951,10 +979,13 @@ conditions:
 - [ ] LINE共有ボタンの実装
 - [ ] OGPメタタグの動的生成
 - [ ] 共有時のプレビュー画像生成
+- [ ] PR作成: `[Phase 3] 共有機能 - バックエンドとSNS連携`
 
 ### Phase 4: 最適化とポリッシュ（1週間）
+**ブランチ名**: `feature/phase-4-optimization`
 
 #### パフォーマンス最適化
+- [ ] feature/phase-4-optimizationブランチの作成とチェックアウト
 - [ ] Web Workerの実装（大画像処理用）
 - [ ] 画像処理のチャンク化
 - [ ] メモリリーク対策の実装
@@ -987,10 +1018,30 @@ conditions:
 - [ ] Cloud Functionsへのデプロイ
 - [ ] 本番環境での動作確認
 - [ ] パフォーマンスモニタリングの設定
+- [ ] PR作成: `[Phase 4] 最適化とポリッシュ - パフォーマンスとPWA`
+
+### Phase 5: 本番リリース
+**ブランチ名**: `release/v1.0.0`
+
+- [ ] developブランチから release/v1.0.0 ブランチを作成
+- [ ] 最終的なバグ修正
+- [ ] ドキュメントの最終確認
+- [ ] mainブランチへのPR作成: `[Release] v1.0.0 - PixelForge 初回リリース`
+- [ ] タグの作成（v1.0.0）
 
 ## 開発開始手順
 
 前提：リポジトリは既にクローンされており、images/ディレクトリにロゴアセットが配置されている状態
+
+### 0. Git初期設定
+```bash
+# developブランチの作成
+git checkout -b develop
+git push -u origin develop
+
+# Phase 0のブランチ作成
+git checkout -b feature/phase-0-setup
+```
 
 ### 1. Next.jsプロジェクトの作成
 ```bash
@@ -1042,4 +1093,42 @@ echo ".env.production" >> .gitignore
 echo "*.log" >> .gitignore
 ```
 
-この仕様書のTODOリストに従って、チェックボックスをマークしながら段階的に実装を進めてください。各タスクが完了したら、該当するチェックボックスに [x] を記入してください。
+### 6. Phase 0完了時のコミットとPR
+```bash
+# すべての変更をコミット
+git add .
+git commit -m "feat: プロジェクトの初期セットアップ完了"
+
+# プッシュしてPRを作成
+git push -u origin feature/phase-0-setup
+# GitHubでPRを作成: feature/phase-0-setup → develop
+```
+
+## プルリクエストテンプレート
+
+```markdown
+## 概要
+[Phase X] の実装が完了しました。
+
+## 完了したタスク
+- [x] タスク1
+- [x] タスク2
+...（該当するPhaseのチェックリストをコピー）
+
+## 主な変更点
+- 変更点1
+- 変更点2
+
+## スクリーンショット
+（UIに関する変更がある場合）
+
+## テスト方法
+1. yarn dev でサーバーを起動
+2. http://localhost:3000 にアクセス
+3. 機能をテスト
+
+## 今後の課題
+- 課題があれば記載
+```
+
+この開発フローに従って、各Phaseごとにブランチを作成し、完了後にプルリクエストを送信してください。
