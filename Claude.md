@@ -9,24 +9,6 @@
 - **プロジェクトID**: coproto-gcp
 - **リージョン**: asia-northeast1
 
-## スタイリング方針
-
-### MUI（Material-UI）を採用
-本プロジェクトでは、スタイリングにMUIを使用します。Tailwind CSSは使用しません。
-
-#### 理由
-1. **統一されたデザインシステム**: Material Designに準拠
-2. **豊富なコンポーネント**: 必要なUIパーツが揃っている
-3. **テーマシステム**: 一貫したカスタマイズが可能
-4. **TypeScript対応**: 型安全な開発
-5. **バンドルサイズ最適化**: 単一のCSSフレームワーク
-
-#### スタイリング方法
-- **コンポーネント**: MUIの既製コンポーネントを使用
-- **カスタムスタイル**: `sx` prop、`styled` API、テーマカスタマイズ
-- **レイアウト**: MUIの`Box`、`Grid`、`Stack`コンポーネント
-- **レスポンシブ**: MUIのブレークポイントシステム
-
 ## 技術スタック
 - **フロントエンド**: Next.js 14+ (App Router)
 - **UIライブラリ**: Material-UI (MUI) v5
@@ -182,6 +164,24 @@ export const pixelForgeTheme = createTheme({
   },
 });
 ```
+
+## スタイリング方針
+
+### MUI（Material-UI）を採用
+本プロジェクトでは、スタイリングにMUIを使用します。Tailwind CSSは使用しません。
+
+#### 理由
+1. **統一されたデザインシステム**: Material Designに準拠
+2. **豊富なコンポーネント**: 必要なUIパーツが揃っている
+3. **テーマシステム**: 一貫したカスタマイズが可能
+4. **TypeScript対応**: 型安全な開発
+5. **バンドルサイズ最適化**: 単一のCSSフレームワーク
+
+#### スタイリング方法
+- **コンポーネント**: MUIの既製コンポーネントを使用
+- **カスタムスタイル**: `sx` prop、`styled` API、テーマカスタマイズ
+- **レイアウト**: MUIの`Box`、`Grid`、`Stack`コンポーネント
+- **レスポンシブ**: MUIのブレークポイントシステム
 
 ## 機能要件
 
@@ -869,10 +869,19 @@ conditions:
 開発中の作業内容、直面した課題、解決方法、感情の変化などを記録することで、開発プロセスの透明性を高め、将来の参考資料とします。
 
 ### 記録方法
-1. リポジトリトップに `WORKLOG.md` ファイルを作成
-2. 作業セッション開始時に日時とセッション番号を記録
+1. リポジトリトップに `worklog/` ディレクトリを作成
+2. 各作業セッションで `WORKLOG_YYYYMMDD_HHMMSS.md` ファイルを作成
 3. 重要な決定、課題、解決策、感情を都度記録
-4. セッション終了時に要約を記載
+4. すべてのログファイルは保持され、履歴として残る
+
+### ディレクトリ構造
+```
+pixelforge/
+├── worklog/
+│   ├── WORKLOG_20240101_120000.md
+│   ├── WORKLOG_20240101_150000.md
+│   └── WORKLOG_20240102_100000.md
+```
 
 ### 記録する内容
 - **作業内容**: 実装した機能、修正したバグ
@@ -880,93 +889,109 @@ conditions:
 - **直面した課題**: エラー、パフォーマンス問題、設計の迷い
 - **解決方法**: 問題をどう解決したか、参考にした資料
 - **感情の記録**: 達成感、フラストレーション、学びの瞬間
+- **動作確認結果**: ブラウザでの表示確認、機能テスト結果
 - **TODO**: 次回に持ち越すタスク
 
-### WORKLOG.md テンプレート
+### ワークログファイルの作成コマンド
+```bash
+# worklogディレクトリがなければ作成
+mkdir -p worklog
 
-```markdown
+# 新しいワークログファイルを作成
+timestamp=$(date +%Y%m%d_%H%M%S)
+cat > worklog/WORKLOG_${timestamp}.md << 'EOF'
 # PixelForge 開発ワークログ
 
-## 概要
-このドキュメントは、PixelForgeの開発過程を記録したものです。技術的な決定、直面した課題、解決方法、そして開発中の感情の変化を記録しています。
-
----
-
-## Session #1 - [Phase名]
 **日時**: YYYY-MM-DD HH:MM - HH:MM  
-**作業時間**: X時間  
-**ブランチ**: feature/phase-X-xxx
+**MVP**: MVP X - [MVP名]  
+**ブランチ**: feature/mvp-X-xxx  
 
-### 🎯 本日の目標
-- [ ] タスク1
-- [ ] タスク2
+## 🎯 本日の目標
+- [ ] 実装するタスク
+- [ ] 動作確認
 
-### 📝 作業ログ
+## 📝 作業ログ
 
-#### HH:MM - 作業開始
-- 作業環境のセットアップ
-- 気持ち: やる気に満ちている！新しいプロジェクトの始まりにワクワク
+### HH:MM - 作業開始
+- 作業環境の準備
+- 前回からの引き継ぎ事項確認
+- 気持ち: 
 
-#### HH:MM - [作業内容]
+### HH:MM - [作業内容]
 **実装内容**:
-- 具体的に何を実装したか
+- 何を実装したか
+
+**使用した技術/ライブラリ**:
+- 
 
 **直面した課題**:
-- エラーメッセージや問題の詳細
+- エラーメッセージ:
+```
+エラー内容
+```
 
 **解決方法**:
 - どのように解決したか
-- 参考にしたURL: [リンク]
+- 参考URL: 
 
 **感情**: 
-- この時点での気持ち（例: 少し混乱したが、解決できて安心）
+- 😊 / 😤 / 💡 / 😅 / 🤔 / 📚
 
-#### HH:MM - [技術的決定]
-**決定内容**: 
-- 何を決定したか（例: 状態管理にuseStateを使用）
+### HH:MM - 動作確認
+**確認URL**: http://localhost:3000  
+**確認内容**:
+- [ ] 機能が正しく動作する
+- [ ] UIが期待通り表示される
+- [ ] エラーが発生しない
+- [ ] レスポンシブ対応（該当する場合）
 
-**理由**:
-- なぜその決定をしたか
+**スクリーンショット**:
+```
+[スクリーンショットの説明]
+```
 
-**代替案**:
-- 検討した他の選択肢
+### HH:MM - コミット
+```bash
+git add .
+git commit -m "feat: [コミットメッセージ]"
+```
 
-### 💡 学んだこと
+## 💡 学んだこと
 - 新しく学んだ技術や概念
 - 今後活かせそうな知見
 
-### 🚧 未解決の課題
-- 解決できなかった問題
-- 次回に持ち越すタスク
+## 🚧 次回への申し送り
+- 未完了のタスク
+- 改善が必要な箇所
+- 次に実装すべき機能
 
-### 📊 セッション要約
+## 📊 セッション要約
 - **完了したタスク**: X個
-- **コミット数**: X回
+- **作業時間**: X時間X分
 - **主な成果**: 
+  - 成果1
+  - 成果2
 - **全体的な感想**: 
-
-### 🔜 次回の予定
-- 次に取り組むタスク
-- 準備が必要なこと
 
 ---
 
-## Session #2 - [Phase名]
-**日時**: YYYY-MM-DD HH:MM - HH:MM  
-**作業時間**: X時間  
-**ブランチ**: feature/phase-X-xxx
+## 使用する絵文字ガイド
+- 😊 達成感・喜び
+- 😤 フラストレーション
+- 💡 新しい発見・アイデア
+- 😅 安堵
+- 🤔 迷い・検討中
+- 📚 学習・理解
+- 🐛 バグ発見
+- ✅ タスク完了
+- 🚧 作業中
+- ⚡ パフォーマンス改善
+- 🎨 UI/UXに関する作業
+- 🔧 リファクタリング
+- 📝 ドキュメント作成
+EOF
 
-...（以降、同じフォーマットで記録）
-```
-
-### コミット時の作業ログ更新
-重要なコミットの後には、以下の情報を追加：
-```markdown
-#### HH:MM - コミット: [コミットメッセージ]
-**コミットハッシュ**: abc1234
-**変更内容**:
-- ファイルA: 変更の概要
-- ファイルB: 変更の概要
+echo "作業ログを作成しました: worklog/WORKLOG_${timestamp}.md"
 ```
 
 ### 感情の記録例
@@ -977,229 +1002,233 @@ conditions:
 - 🤔 迷い: 設計判断で悩んでいる
 - 📚 学び: 新しい概念を理解できた
 
-### Phase完了時の振り返り
-各Phase完了時には、以下の振り返りセクションを追加：
+### MVP完了時の振り返り
+各MVP完了時には、以下の振り返りセクションを追加：
 
 ```markdown
-## Phase X 振り返り
-**期間**: YYYY-MM-DD 〜 YYYY-MM-DD  
+# PixelForge 開発ワークログ
+
+**日時**: YYYY-MM-DD HH:MM - HH:MM  
 **総作業時間**: XX時間  
 **セッション数**: X回
 
-### 📈 成果
+## 📈 成果
 - 実装した主な機能
 - 解決した技術的課題
 
-### 🔍 振り返り
+## 🔍 振り返り
 - **うまくいったこと**:
 - **改善が必要なこと**:
 - **予想外だったこと**:
 
-### 📝 教訓
-- 次のPhaseに活かせる学び
+## 📝 教訓
+- 次のMVPに活かせる学び
 - 同様のプロジェクトへのアドバイス
 ```
 
 ## 開発フロー
 
+### MVP駆動開発
+各フェーズを小さなMVP（Minimum Viable Product）に分割し、段階的に機能を追加していきます。各MVPは独立して動作確認が可能で、ユーザーがブラウザで成果を確認できます。
+
 ### ブランチ戦略
 - `main`: 本番環境用ブランチ
 - `develop`: 開発統合ブランチ
-- `feature/phase-X-[phase-name]`: 各Phase用のフィーチャーブランチ
+- `feature/mvp-X-[mvp-name]`: 各MVP用のフィーチャーブランチ
 
 ### プルリクエストルール
-1. 各Phaseごとに専用のブランチを作成
-2. Phase完了時にプルリクエストを作成
-3. PRタイトル: `[Phase X] Phase名`
-4. PR説明には完了したタスクのチェックリストを含める
+1. 各MVPごとに専用のブランチを作成
+2. MVP完了時にプルリクエストを作成
+3. PRタイトル: `[MVP X] MVP名`
+4. ブラウザで動作確認可能な状態でPR作成
 5. レビュー後にdevelopブランチにマージ
 
-## 開発ロードマップ
+## 開発ロードマップ（MVP駆動）
 
-### Phase 0: プロジェクトセットアップ
-**ブランチ名**: `feature/phase-0-setup`
+### MVP 0: プロジェクト基盤
+**ブランチ名**: `feature/mvp-0-project-setup`
+**目標**: Next.jsプロジェクトが起動し、PixelForgeのロゴが表示される
 
 - [ ] developブランチの作成
-- [ ] feature/phase-0-setupブランチの作成とチェックアウト
-- [ ] Next.jsプロジェクトの作成（App Router、TypeScript、Tailwind CSS）
-- [ ] yarnでMUIと関連パッケージのインストール
-- [ ] プロジェクト構造の作成（ディレクトリ構成）
-- [ ] ESLintとPrettierの設定
-- [ ] images/ディレクトリのアセットを適切に配置
-- [ ] 基本的なレイアウトコンポーネントの作成
-- [ ] READMEの更新（プロジェクト概要、セットアップ手順）
-- [ ] PR作成: `[Phase 0] プロジェクトセットアップ`
+- [ ] feature/mvp-0-project-setupブランチの作成
+- [ ] worklogディレクトリの作成とテンプレート設置
+- [ ] Next.jsプロジェクトの作成
+- [ ] 基本的なレイアウト（ヘッダーにロゴ表示）
+- [ ] 動作確認: http://localhost:3000 でロゴが表示される
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 0] プロジェクト基盤構築`
 
-### Phase 1: MVP（2週間）
-**ブランチ名**: `feature/phase-1-mvp`
+### MVP 1: 画像アップロード機能
+**ブランチ名**: `feature/mvp-1-image-upload`
+**目標**: 画像をドラッグ&ドロップでアップロードし、プレビュー表示できる
 
-#### ブランディング実装
-- [ ] feature/phase-1-mvpブランチの作成とチェックアウト
-- [ ] ロゴコンポーネント（Logo.tsx）の作成
-- [ ] MUIテーマ設定（theme.ts）の作成
-- [ ] カラーパレット定数の定義
-- [ ] ヘッダーコンポーネントの実装
-- [ ] フッターコンポーネントの実装
-- [ ] ファビコンとメタデータの設定
-- [ ] OGP画像の作成と設定
+- [ ] feature/mvp-1-image-uploadブランチの作成
+- [ ] MUIのインストールと設定
+- [ ] ImageUploaderコンポーネントの基本実装
+- [ ] ドラッグ&ドロップエリアの作成
+- [ ] 画像プレビュー機能
+- [ ] ファイルサイズ・形式の検証
+- [ ] 動作確認: 画像をドロップしてプレビューが表示される
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 1] 画像アップロード機能`
 
-#### 画像アップロード機能
-- [ ] ImageUploaderコンポーネントの作成
-- [ ] DropZoneコンポーネントの実装（react-dropzone使用）
-- [ ] ファイル選択ボタンの実装
-- [ ] クリップボードハンドラーの実装（Ctrl+V対応）
-- [ ] ファイルバリデーション（形式、サイズ）の実装
-- [ ] アップロード時のプレビュー表示
-- [ ] エラーハンドリングとユーザーフィードバック
+### MVP 2: 基本的なピクセル化
+**ブランチ名**: `feature/mvp-2-basic-pixelation`
+**目標**: アップロードした画像を固定サイズ（8px）でピクセル化できる
 
-#### ピクセル化処理
+- [ ] feature/mvp-2-basic-pixelationブランチの作成
 - [ ] PixelConverterコンポーネントの作成
-- [ ] Canvas要素の設定と管理
-- [ ] 基本的なピクセル化アルゴリズムの実装
-- [ ] ピクセルサイズスライダー（2-64px）の実装
-- [ ] リアルタイムプレビューの実装（debounce付き）
-- [ ] 処理前後の比較表示機能
-- [ ] useImageProcessingフックの作成
+- [ ] Canvas要素での画像処理実装
+- [ ] 固定8pxピクセル化アルゴリズム
+- [ ] 処理ボタンの追加
+- [ ] 処理結果の表示
+- [ ] 動作確認: 画像をピクセル化して結果が表示される
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 2] 基本的なピクセル化機能`
 
-#### ダウンロード機能
-- [ ] ダウンロードボタンコンポーネントの作成
-- [ ] PNG形式でのエクスポート機能
-- [ ] ファイル名の自動生成（pixelated_[元のファイル名]）
-- [ ] ダウンロード成功時のフィードバック
-- [ ] PR作成: `[Phase 1] MVP - 基本的な画像変換機能`
+### MVP 3: ダウンロード機能
+**ブランチ名**: `feature/mvp-3-download`
+**目標**: ピクセル化した画像をPNG形式でダウンロードできる
 
-### Phase 2: 拡張機能（2週間）
-**ブランチ名**: `feature/phase-2-advanced-features`
+- [ ] feature/mvp-3-downloadブランチの作成
+- [ ] ダウンロードボタンの実装
+- [ ] Canvas to Blob変換
+- [ ] ファイル名の自動生成
+- [ ] ダウンロード処理の実装
+- [ ] 動作確認: 処理済み画像がダウンロードできる
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 3] ダウンロード機能`
 
-#### プリセット機能
-- [ ] feature/phase-2-advanced-featuresブランチの作成とチェックアウト
+### MVP 4: ピクセルサイズ調整
+**ブランチ名**: `feature/mvp-4-pixel-size`
+**目標**: スライダーでピクセルサイズを2-64pxの範囲で調整できる
+
+- [ ] feature/mvp-4-pixel-sizeブランチの作成
+- [ ] MUIスライダーの実装
+- [ ] 可変ピクセルサイズ対応
+- [ ] リアルタイムプレビュー（debounce付き）
+- [ ] スライダー値の表示
+- [ ] 動作確認: スライダーでピクセルサイズが変更できる
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 4] ピクセルサイズ調整機能`
+
+### MVP 5: UI/UXの向上
+**ブランチ名**: `feature/mvp-5-ui-polish`
+**目標**: ローディング状態、エラー処理、レスポンシブ対応
+
+- [ ] feature/mvp-5-ui-polishブランチの作成
+- [ ] ローディングスピナーの追加
+- [ ] エラー時のフィードバック
+- [ ] レスポンシブデザイン対応
+- [ ] ヘッダー・フッターの完成
+- [ ] 動作確認: スマホでも適切に表示される
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 5] UI/UX向上`
+
+### MVP 6: プリセット機能（基本）
+**ブランチ名**: `feature/mvp-6-basic-presets`
+**目標**: 3つの基本プリセット（8bit、16bit、モダン）を選択できる
+
+- [ ] feature/mvp-6-basic-presetsブランチの作成
 - [ ] PresetSelectorコンポーネントの作成
-- [ ] PresetCardコンポーネントの実装
-- [ ] ゲーム機プリセットの定義（ファミコン、ゲームボーイ、スーファミ）
-- [ ] アートスタイルプリセットの定義（8bit、16bit、モダン）
-- [ ] プリセット適用ロジックの実装
-- [ ] CustomPresetDialogの作成
-- [ ] LocalStorageへのカスタムプリセット保存機能
-- [ ] usePresetsフックの作成
+- [ ] 基本プリセットの定義
+- [ ] プリセット選択UI
+- [ ] プリセット適用ロジック
+- [ ] 動作確認: プリセットを選んで適用できる
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 6] 基本プリセット機能`
 
-#### カラーパレット機能
-- [ ] ColorPaletteコンポーネントの作成
-- [ ] 色数制限スライダーの実装（2-256色）
-- [ ] k-means法による自動色抽出の実装
-- [ ] プリセットパレット（レトロゲーム機）の追加
-- [ ] PaletteEditorコンポーネントの実装
-- [ ] カスタムパレット作成機能
-- [ ] ColorPickerコンポーネントの実装
-- [ ] ディザリングオプション（Floyd-Steinberg）の追加
+### MVP 7: カラーパレット（基本）
+**ブランチ名**: `feature/mvp-7-color-palette`
+**目標**: 色数を制限できる（8、16、32、64色）
 
-#### エフェクト機能
-- [ ] エフェクト選択UIの作成
+- [ ] feature/mvp-7-color-paletteブランチの作成
+- [ ] 色数制限のUI追加
+- [ ] 色数削減アルゴリズムの実装
+- [ ] カラーパレット表示
+- [ ] 動作確認: 色数を変更して結果が反映される
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 7] 基本カラーパレット機能`
+
+### MVP 8: エフェクト機能
+**ブランチ名**: `feature/mvp-8-effects`
+**目標**: モノクロ、セピアなどの基本エフェクトを適用できる
+
+- [ ] feature/mvp-8-effectsブランチの作成
+- [ ] エフェクト選択UI
 - [ ] モノクロ変換の実装
-- [ ] セピア調変換の実装
-- [ ] ネガティブ変換の実装
-- [ ] グリッドライン表示オプション
-- [ ] スキャンライン効果の実装
-- [ ] CRTモニター風湾曲効果の実装
-- [ ] effects.tsにエフェクトロジックを集約
-- [ ] PR作成: `[Phase 2] 拡張機能 - プリセット、パレット、エフェクト`
+- [ ] セピア変換の実装
+- [ ] エフェクトのオン/オフ切り替え
+- [ ] 動作確認: エフェクトが適用される
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 8] エフェクト機能`
 
-### Phase 3: 共有機能（1週間）
-**ブランチ名**: `feature/phase-3-sharing`
+### MVP 9: 処理前後の比較
+**ブランチ名**: `feature/mvp-9-comparison`
+**目標**: オリジナル画像と処理後の画像を並べて比較できる
 
-#### バックエンド実装
-- [ ] feature/phase-3-sharingブランチの作成とチェックアウト
-- [ ] Google Cloud Functionsプロジェクトの作成
-- [ ] requirements.txtの作成（Python依存関係）
-- [ ] main.pyの実装（HTTPエンドポイント）
-- [ ] share_handler.pyの実装（共有ロジック）
-- [ ] storage_manager.pyの実装（GCS操作）
-- [ ] Firestoreスキーマの設計と実装
-- [ ] CORS設定の追加
-- [ ] エラーハンドリングの実装
+- [ ] feature/mvp-9-comparisonブランチの作成
+- [ ] 比較ビューのレイアウト
+- [ ] スライダーでの比較機能
+- [ ] ビフォーアフター表示
+- [ ] 動作確認: 処理前後を比較できる
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 9] 画像比較機能`
 
-#### フロントエンド共有機能
-- [ ] ShareDialogコンポーネントの作成
-- [ ] 共有ボタンの実装
-- [ ] 共有URL生成の実装
-- [ ] useShareフックの作成
-- [ ] 共有ページ（/p/[id]）の作成
-- [ ] 共有画像の表示機能
-- [ ] 共有パラメータによる再編集機能
-- [ ] 有効期限表示
+### MVP 10: パフォーマンス最適化
+**ブランチ名**: `feature/mvp-10-performance`
+**目標**: 大きな画像でもスムーズに処理できる
 
-#### SNS連携
-- [ ] SocialButtonsコンポーネントの作成
-- [ ] Twitter共有ボタンの実装
-- [ ] Facebook共有ボタンの実装
-- [ ] LINE共有ボタンの実装
-- [ ] OGPメタタグの動的生成
-- [ ] 共有時のプレビュー画像生成
-- [ ] PR作成: `[Phase 3] 共有機能 - バックエンドとSNS連携`
-
-### Phase 4: 最適化とポリッシュ（1週間）
-**ブランチ名**: `feature/phase-4-optimization`
-
-#### パフォーマンス最適化
-- [ ] feature/phase-4-optimizationブランチの作成とチェックアウト
-- [ ] Web Workerの実装（大画像処理用）
-- [ ] 画像処理のチャンク化
-- [ ] メモリリーク対策の実装
-- [ ] Lighthouse スコアの改善
-- [ ] バンドルサイズの最適化
-- [ ] 画像の遅延読み込み
-- [ ] キャッシュ戦略の実装
-
-#### UI/UX改善
-- [ ] ローディング状態の改善（スケルトン、プログレスバー）
-- [ ] エラー状態のデザイン改善
-- [ ] アニメーションの追加（ロゴパルス、トランジション）
-- [ ] レスポンシブデザインの完全対応
-- [ ] キーボードショートカットの実装
-- [ ] ツールチップとヘルプテキストの追加
-- [ ] 初回訪問時のチュートリアル
-
-#### PWA対応
-- [ ] manifest.jsonの作成
-- [ ] Service Workerの実装
-- [ ] オフライン対応
-- [ ] インストールプロンプトの実装
-- [ ] プッシュ通知の準備（将来の機能用）
-
-#### テストとデプロイ
-- [ ] ユニットテストの作成（主要コンポーネント）
-- [ ] E2Eテストの作成（Playwright）
-- [ ] デプロイスクリプトの作成
-- [ ] Cloud Runへのデプロイ
-- [ ] Cloud Functionsへのデプロイ
-- [ ] 本番環境での動作確認
-- [ ] パフォーマンスモニタリングの設定
-- [ ] PR作成: `[Phase 4] 最適化とポリッシュ - パフォーマンスとPWA`
-
-### Phase 5: 本番リリース
-**ブランチ名**: `release/v1.0.0`
-
-- [ ] developブランチから release/v1.0.0 ブランチを作成
-- [ ] 最終的なバグ修正
-- [ ] ドキュメントの最終確認
-- [ ] mainブランチへのPR作成: `[Release] v1.0.0 - PixelForge 初回リリース`
-- [ ] タグの作成（v1.0.0）
+- [ ] feature/mvp-10-performanceブランチの作成
+- [ ] Web Workerの実装（1MB以上の画像用）
+- [ ] 画像リサイズ機能
+- [ ] メモリ管理の改善
+- [ ] プログレスバーの追加
+- [ ] 動作確認: 大きな画像でも処理できる
+- [ ] ワークログ作成: WORKLOG_[timestamp].md
+- [ ] PR作成: `[MVP 10] パフォーマンス最適化`
 
 ## 開発開始手順
 
 前提：リポジトリは既にクローンされており、images/ディレクトリにロゴアセットが配置されている状態
 
-### 0. Git初期設定とワークログ作成
+### 0. Git初期設定とワークログ準備
 ```bash
-# WORKLOG.mdを作成
-touch WORKLOG.md
-# 上記のテンプレートをコピーして初期内容を設定
+# worklogディレクトリを作成
+mkdir -p worklog
+
+# 最初のワークログを作成
+timestamp=$(date +%Y%m%d_%H%M%S)
+cat > worklog/WORKLOG_${timestamp}.md << 'EOF'
+# PixelForge 開発ワークログ
+
+**日時**: YYYY-MM-DD HH:MM - HH:MM  
+**MVP**: MVP 0 - プロジェクト基盤  
+**ブランチ**: feature/mvp-0-project-setup  
+
+## 🎯 本日の目標
+- [ ] Next.jsプロジェクトのセットアップ
+- [ ] PixelForgeロゴの表示
+- [ ] 動作確認
+
+## 📝 作業ログ
+
+### HH:MM - 作業開始
+- リポジトリをクローン済み
+- images/ディレクトリにロゴアセット確認
+- 気持ち: 😊 新プロジェクトスタート！
+
+（以下、テンプレートに従って記録）
+EOF
+
+echo "作業ログを作成しました: worklog/WORKLOG_${timestamp}.md"
 
 # developブランチの作成
 git checkout -b develop
 git push -u origin develop
 
-# Phase 0のブランチ作成
-git checkout -b feature/phase-0-setup
+# MVP 0のブランチ作成
+git checkout -b feature/mvp-0-project-setup
 ```
 
 ### 1. Next.jsプロジェクトの作成
@@ -1209,19 +1238,21 @@ if [ -f package.json ]; then
   mv package.json package.json.backup
 fi
 
-# 現在のディレクトリにNext.jsプロジェクトを作成（Tailwindなし）
-yarn create next-app . --typescript --app --no-tailwind --no-src-dir --import-alias "@/*"
+# npxでNext.jsプロジェクトを作成（Tailwindなし）
+npx create-next-app@latest . --typescript --app --no-tailwind --no-src-dir --import-alias "@/*" --use-npm
 
-# 既存のファイルがある場合は以下の選択をする：
-# - README.md: No（既存のものを保持）
-# - .gitignore: Yes（Next.js用に更新）
-# - その他: Yes（新規作成を許可）
+# プロンプトへの回答:
+# - Would you like to use ESLint? → Yes
+# - Would you like to use Tailwind CSS? → No（自動でNoになるはず）
 
-# package.json.backupがある場合は、必要な内容を確認
+# 既存のファイルがある場合の選択:
+# - README.md: n（既存のものを保持）
+# - その他: y（新規作成を許可）
+
+# package.json.backupがある場合は確認後削除
 if [ -f package.json.backup ]; then
-  echo "既存のpackage.jsonの内容を確認:"
+  echo "既存のpackage.jsonを確認:"
   cat package.json.backup
-  # 必要に応じて手動でマージ
   rm package.json.backup
 fi
 ```
@@ -1229,97 +1260,150 @@ fi
 ### 2. 必要なパッケージのインストール
 ```bash
 # MUIと関連パッケージ
-yarn add @mui/material @emotion/react @emotion/styled @mui/icons-material
+npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
 
 # 画像処理関連
-yarn add react-dropzone
+npm install react-dropzone
 
 # ユーティリティ
-yarn add lodash
-yarn add -D @types/lodash
+npm install lodash
+npm install --save-dev @types/lodash
 
-# 型定義（必要に応じて）
-yarn add -D @types/node
+# 追加の型定義（必要に応じて）
+npm install --save-dev @types/node
 ```
 
-### 3. プロジェクト構造の作成
+### 3. プロジェクト構造の作成（段階的に）
 ```bash
-# ディレクトリ構造を作成
-mkdir -p app/p/\[id\]
-mkdir -p app/api/share
-mkdir -p app/api/shared/\[id\]
-mkdir -p components/{ImageUploader,PixelConverter,PresetSelector,ColorPalette,ShareDialog,layout,common}
-mkdir -p lib/{pixelate,presets,share,utils}
-mkdir -p hooks
-mkdir -p types
+# MVP 0で必要な最小限のディレクトリのみ作成
+mkdir -p components/common
+mkdir -p components/layout
 mkdir -p styles
-mkdir -p functions
+
+# 以降のディレクトリは各MVPで必要になったときに作成
 ```
 
 ### 4. 開発サーバーの起動
 ```bash
-yarn dev
+npm run dev
+# ブラウザで http://localhost:3000 を開いて確認
 ```
 
 ### 5. Git設定
 ```bash
 # .gitignoreに追加
-echo ".env.local" >> .gitignore
-echo ".env.production" >> .gitignore
 echo "*.log" >> .gitignore
+echo ".DS_Store" >> .gitignore
+echo "worklog/" >> .gitignore  # ワークログはGitに含めない場合
 ```
 
-### 6. Phase 0完了時のコミットとPR
+### 6. MVP 0完了時のコミットとPR
 ```bash
 # 変更内容を確認
 git status
 
-# .gitignoreに必要な項目を追加（もし不足があれば）
-echo "*.log" >> .gitignore
-echo ".DS_Store" >> .gitignore
-
-# すべての変更をステージング
+# ステージングとコミット
 git add .
+git commit -m "feat(mvp-0): プロジェクト基盤構築
 
-# コミット
-git commit -m "feat: プロジェクトの初期セットアップ完了
-
-- Next.js 14 (App Router) プロジェクト作成
-- MUIとEmotionのインストール
-- 基本的なディレクトリ構造の構築
-- TypeScript設定
-- 開発環境の準備完了"
+- Next.js 14 (App Router) セットアップ
+- MUIとEmotionの導入
+- PixelForgeロゴの表示
+- 基本レイアウトの実装"
 
 # プッシュしてPRを作成
-git push -u origin feature/phase-0-setup
-# GitHubでPRを作成: feature/phase-0-setup → develop
+git push -u origin feature/mvp-0-project-setup
+# GitHubでPRを作成: feature/mvp-0-project-setup → develop
 ```
 
 ## プルリクエストテンプレート
 
 ```markdown
 ## 概要
-[Phase X] の実装が完了しました。
+[MVP X] の実装が完了しました。
 
-## 完了したタスク
-- [x] タスク1
-- [x] タスク2
-...（該当するPhaseのチェックリストをコピー）
+## 🎯 実装した機能
+- 機能1
+- 機能2
 
-## 主な変更点
-- 変更点1
-- 変更点2
-
-## スクリーンショット
-（UIに関する変更がある場合）
-
-## テスト方法
-1. yarn dev でサーバーを起動
+## 🖥️ 動作確認方法
+1. `npm run dev` でサーバーを起動
 2. http://localhost:3000 にアクセス
-3. 機能をテスト
+3. [具体的な操作手順]
 
-## 今後の課題
-- 課題があれば記載
+## 📸 スクリーンショット
+[動作している画面のスクリーンショット]
+
+## ✅ チェックリスト
+- [ ] ブラウザで動作確認済み
+- [ ] エラーハンドリング実装済み
+- [ ] レスポンシブ対応（該当する場合）
+- [ ] コンソールエラーなし
+
+## 📝 ワークログ
+- worklog/WORKLOG_YYYYMMDD_HHMMSS.md を参照
+
+## 🚧 今後の課題
+- あれば記載
 ```
 
-この開発フローに従って、各Phaseごとにブランチを作成し、完了後にプルリクエストを送信してください。
+## よくあるエラーと対処法
+
+### 1. npx create-next-app でのlicenseエラー
+```
+Error: warning package.json: No license field
+```
+
+**原因**: 既存のpackage.jsonにlicenseフィールドがない
+
+**対処法**: 
+```bash
+# 既存のpackage.jsonを一時退避
+mv package.json package.json.backup
+# create-next-appを実行
+npx create-next-app@latest . --typescript --app --no-tailwind --no-src-dir --import-alias "@/*" --use-npm
+# 必要に応じて既存の設定をマージ
+```
+
+### 2. ポート3000が使用中
+```
+Error: Port 3000 is already in use
+```
+
+**対処法**:
+```bash
+# 別のポートで起動
+PORT=3001 npm run dev
+# または、使用中のプロセスを確認して終了
+lsof -i :3000
+kill -9 [PID]
+```
+
+### 3. MUIとEmotionの競合
+```
+Error: You are loading @emotion/react when it is already loaded
+```
+
+**対処法**: Next.jsの設定でEmotionを最適化
+```javascript
+// next.config.js
+module.exports = {
+  compiler: {
+    emotion: true,
+  },
+}
+```
+
+### 4. npmとyarnの混在エラー
+```
+Error: Your project has both yarn.lock and package-lock.json
+```
+
+**対処法**:
+```bash
+# npmを使用する場合
+rm yarn.lock
+npm install
+```
+
+この仕様書のTODOリストに従って、MVPごとに段階的に実装を進めてください。各MVPが完了したら、ブラウザで動作確認を行い、ワークログを作成してからPRを送信してください。
